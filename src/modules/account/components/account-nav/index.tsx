@@ -35,14 +35,15 @@ const AccountNav = ({
           >
             <>
               <ChevronDown className="transform rotate-90" />
-              <span>Account</span>
+              <span>Compte</span>
             </>
           </LocalizedClientLink>
         ) : (
           <>
             <div className="text-xl-semi mb-4 px-8">
-              Hello {customer?.first_name}
+              Bonjour {customer?.first_name}
             </div>
+
             <div className="text-base-regular">
               <ul>
                 <li>
@@ -54,12 +55,14 @@ const AccountNav = ({
                     <>
                       <div className="flex items-center gap-x-2">
                         <User size={20} />
-                        <span>Profile</span>
+                        <span>Profil</span>
                       </div>
+
                       <ChevronDown className="transform -rotate-90" />
                     </>
                   </LocalizedClientLink>
                 </li>
+
                 <li>
                   <LocalizedClientLink
                     href="/account/addresses"
@@ -69,12 +72,14 @@ const AccountNav = ({
                     <>
                       <div className="flex items-center gap-x-2">
                         <MapPin size={20} />
-                        <span>Addresses</span>
+                        <span>Adresses</span>
                       </div>
+
                       <ChevronDown className="transform -rotate-90" />
                     </>
                   </LocalizedClientLink>
                 </li>
+
                 <li>
                   <LocalizedClientLink
                     href="/account/orders"
@@ -83,11 +88,13 @@ const AccountNav = ({
                   >
                     <div className="flex items-center gap-x-2">
                       <Package size={20} />
-                      <span>Orders</span>
+                      <span>Commandes</span>
                     </div>
+
                     <ChevronDown className="transform -rotate-90" />
                   </LocalizedClientLink>
                 </li>
+
                 <li>
                   <button
                     type="button"
@@ -97,8 +104,9 @@ const AccountNav = ({
                   >
                     <div className="flex items-center gap-x-2">
                       <ArrowRightOnRectangle />
-                      <span>Log out</span>
+                      <span>Déconnexion</span>
                     </div>
+
                     <ChevronDown className="transform -rotate-90" />
                   </button>
                 </li>
@@ -107,11 +115,13 @@ const AccountNav = ({
           </>
         )}
       </div>
+
       <div className="hidden small:block" data-testid="account-nav">
         <div>
           <div className="pb-4">
-            <h3 className="text-base-semi">Account</h3>
+            <h3 className="text-base-semi">Compte</h3>
           </div>
+
           <div className="text-base-regular">
             <ul className="flex mb-0 justify-start items-start flex-col gap-y-4">
               <li>
@@ -120,43 +130,47 @@ const AccountNav = ({
                   route={route!}
                   data-testid="overview-link"
                 >
-                  Overview
+                  Vue d’ensemble
                 </AccountNavLink>
               </li>
+
               <li>
                 <AccountNavLink
                   href="/account/profile"
                   route={route!}
                   data-testid="profile-link"
                 >
-                  Profile
+                  Profil
                 </AccountNavLink>
               </li>
+
               <li>
                 <AccountNavLink
                   href="/account/addresses"
                   route={route!}
                   data-testid="addresses-link"
                 >
-                  Addresses
+                  Adresses
                 </AccountNavLink>
               </li>
+
               <li>
                 <AccountNavLink
                   href="/account/orders"
                   route={route!}
                   data-testid="orders-link"
                 >
-                  Orders
+                  Commandes
                 </AccountNavLink>
               </li>
+
               <li className="text-grey-700">
                 <button
                   type="button"
                   onClick={handleLogout}
                   data-testid="logout-button"
                 >
-                  Log out
+                  Déconnexion
                 </button>
               </li>
             </ul>
@@ -183,6 +197,7 @@ const AccountNavLink = ({
   const { countryCode }: { countryCode: string } = useParams()
 
   const active = route.split(countryCode)[1] === href
+
   return (
     <LocalizedClientLink
       href={href}

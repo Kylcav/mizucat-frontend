@@ -55,10 +55,10 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
           })}
         >
           <Thumbnail
-            thumbnail={item.thumbnail}
-            images={item.variant?.product?.images}
-            size="square"
-          />
+  thumbnail={item.variant?.images?.[0]?.url || item.thumbnail}
+  images={item.variant?.images || item.variant?.product?.images}
+  size="square"
+/>
         </LocalizedClientLink>
       </Table.Cell>
 

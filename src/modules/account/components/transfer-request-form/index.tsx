@@ -27,46 +27,58 @@ export default function TransferRequestForm() {
       <div className="grid sm:grid-cols-2 items-center gap-x-8 gap-y-4 w-full">
         <div className="flex flex-col gap-y-1">
           <Heading level="h3" className="text-lg text-neutral-950">
-            Order transfers
+            Transfert de commande
           </Heading>
+
           <Text className="text-base-regular text-neutral-500">
-            Can&apos;t find the order you are looking for?
-            <br /> Connect an order to your account.
+            Vous ne trouvez pas la commande que vous recherchez ?
+            <br /> Associez une commande à votre compte.
           </Text>
         </div>
+
         <form
           action={formAction}
           className="flex flex-col gap-y-1 sm:items-end"
         >
           <div className="flex flex-col gap-y-2 w-full">
-            <Input className="w-full" name="order_id" placeholder="Order ID" />
+            <Input
+              className="w-full"
+              name="order_id"
+              placeholder="ID de commande"
+            />
+
             <SubmitButton
               variant="secondary"
               className="w-fit whitespace-nowrap self-end"
             >
-              Request transfer
+              Demander le transfert
             </SubmitButton>
           </div>
         </form>
       </div>
+
       {!state.success && state.error && (
         <Text className="text-base-regular text-rose-500 text-right">
           {state.error}
         </Text>
       )}
+
       {showSuccess && (
         <div className="flex justify-between p-4 bg-neutral-50 shadow-borders-base w-full self-stretch items-center">
           <div className="flex gap-x-2 items-center">
             <CheckCircleMiniSolid className="w-4 h-4 text-emerald-500" />
+
             <div className="flex flex-col gap-y-1">
               <Text className="text-medim-pl text-neutral-950">
-                Transfer for order {state.order?.id} requested
+                Demande de transfert pour la commande {state.order?.id} envoyée
               </Text>
+
               <Text className="text-base-regular text-neutral-600">
-                Transfer request email sent to {state.order?.email}
+                Un e-mail de transfert a été envoyé à {state.order?.email}
               </Text>
             </div>
           </div>
+
           <IconButton
             variant="transparent"
             className="h-fit"

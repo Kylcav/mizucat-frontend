@@ -21,6 +21,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
   const [errorMessage, setErrorMessage] = React.useState("")
 
   const { promotions = [] } = cart
+
   const removePromotionCode = async (code: string) => {
     const validPromotions = promotions.filter(
       (promotion) => promotion.code !== code
@@ -35,13 +36,19 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
     setErrorMessage("")
 
     const code = formData.get("code")
+
     if (!code) {
       return
     }
-    const input = document.getElementById("promotion-input") as HTMLInputElement
+
+    const input = document.getElementById(
+      "promotion-input"
+    ) as HTMLInputElement
+
     const codes = promotions
       .filter((p) => p.code !== undefined)
       .map((p) => p.code!)
+
     codes.push(code.toString())
 
     try {
@@ -66,10 +73,10 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
               className="txt-medium text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
               data-testid="add-discount-button"
             >
-              Add Promotion Code(s)
+              Ajouter un code promotionnel
             </button>
 
-            {/* <Tooltip content="You can add multiple promotion codes">
+            {/* <Tooltip content="Vous pouvez ajouter plusieurs codes promotionnels">
               <InformationCircleSolid color="var(--fg-muted)" />
             </Tooltip> */}
           </Label>
@@ -85,11 +92,12 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                   autoFocus={false}
                   data-testid="discount-input"
                 />
+
                 <SubmitButton
                   variant="secondary"
                   data-testid="discount-apply-button"
                 >
-                  Apply
+                  Appliquer
                 </SubmitButton>
               </div>
 
@@ -105,7 +113,7 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
           <div className="w-full flex items-center">
             <div className="flex flex-col w-full">
               <Heading className="txt-medium mb-2">
-                Promotion(s) applied:
+                Promotion(s) appliquée(s) :
               </Heading>
 
               {promotions.map((promotion) => {
@@ -140,13 +148,9 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                             </>
                           )}
                         )
-                        {/* {promotion.is_automatic && (
-                          <Tooltip content="This promotion is automatically applied">
-                            <InformationCircleSolid className="inline text-zinc-400" />
-                          </Tooltip>
-                        )} */}
                       </span>
                     </Text>
+
                     {!promotion.is_automatic && (
                       <button
                         className="flex items-center"
@@ -160,8 +164,9 @@ const DiscountCode: React.FC<DiscountCodeProps> = ({ cart }) => {
                         data-testid="remove-discount-button"
                       >
                         <Trash size={14} />
+
                         <span className="sr-only">
-                          Remove discount code from order
+                          Supprimer le code promotionnel de la commande
                         </span>
                       </button>
                     )}

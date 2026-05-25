@@ -13,9 +13,9 @@ type MyInformationProps = {
 const ProfilePassword: React.FC<MyInformationProps> = ({ customer }) => {
   const [successState, setSuccessState] = React.useState(false)
 
-  // TODO: Add support for password updates
+  // TODO: Ajouter la prise en charge de la mise à jour du mot de passe
   const updatePassword = async () => {
-    toast.info("Password update is not implemented")
+    toast.info("La mise à jour du mot de passe n’est pas implémentée")
   }
 
   const clearState = () => {
@@ -29,9 +29,9 @@ const ProfilePassword: React.FC<MyInformationProps> = ({ customer }) => {
       className="w-full"
     >
       <AccountInfo
-        label="Password"
+        label="Mot de passe"
         currentInfo={
-          <span>The password is not shown for security reasons</span>
+          <span>Le mot de passe n’est pas affiché pour des raisons de sécurité</span>
         }
         isSuccess={successState}
         isError={false}
@@ -41,21 +41,21 @@ const ProfilePassword: React.FC<MyInformationProps> = ({ customer }) => {
       >
         <div className="grid grid-cols-2 gap-4">
           <Input
-            label="Old password"
+            label="Ancien mot de passe"
             name="old_password"
             required
             type="password"
             data-testid="old-password-input"
           />
           <Input
-            label="New password"
+            label="Nouveau mot de passe"
             type="password"
             name="new_password"
             required
             data-testid="new-password-input"
           />
           <Input
-            label="Confirm password"
+            label="Confirmer le mot de passe"
             type="password"
             name="confirm_password"
             required

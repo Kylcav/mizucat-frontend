@@ -2,7 +2,6 @@ import { Heading } from "@medusajs/ui"
 import { cookies as nextCookies } from "next/headers"
 
 import CartTotals from "@modules/common/components/cart-totals"
-import Help from "@modules/order/components/help"
 import Items from "@modules/order/components/items"
 import OnboardingCta from "@modules/order/components/onboarding-cta"
 import OrderDetails from "@modules/order/components/order-details"
@@ -33,18 +32,20 @@ export default async function OrderCompletedTemplate({
             level="h1"
             className="flex flex-col gap-y-3 text-ui-fg-base text-3xl mb-4"
           >
-            <span>Thank you!</span>
-            <span>Your order was placed successfully.</span>
+            <span>Merci !</span>
+            <span>Votre commande a été passée avec succès.</span>
           </Heading>
+
           <OrderDetails order={order} />
+
           <Heading level="h2" className="flex flex-row text-3xl-regular">
-            Summary
+            Résumé
           </Heading>
+
           <Items order={order} />
           <CartTotals totals={order} />
           <ShippingDetails order={order} />
           <PaymentDetails order={order} />
-          <Help />
         </div>
       </div>
     </div>

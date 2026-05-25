@@ -24,10 +24,21 @@ const StoreTemplate = ({
       data-testid="category-container"
     >
       <RefinementList sortBy={sort} />
+
       <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">All products</h1>
+        <div className="mb-8">
+          <p className="text-sm uppercase tracking-widest text-[#8a6f55]">
+            Boutique
+          </p>
+
+          <h1
+            className="mt-2 text-4xl font-bold tracking-tight"
+            data-testid="store-page-title"
+          >
+            Tous nos produits
+          </h1>
         </div>
+
         <Suspense fallback={<SkeletonProductGrid />}>
           <PaginatedProducts
             sortBy={sort}

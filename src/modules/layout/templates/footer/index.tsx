@@ -1,155 +1,77 @@
-import { listCategories } from "@lib/data/categories"
-import { listCollections } from "@lib/data/collections"
-import { Text, clx } from "@medusajs/ui"
+import { Text } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import MedusaCTA from "@modules/layout/components/medusa-cta"
 
 export default async function Footer() {
-  const { collections } = await listCollections({
-    fields: "*products",
-  })
-  const productCategories = await listCategories()
-
   return (
-    <footer className="border-t border-ui-border-base w-full">
-      <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
+    <footer className="border-t border-[#ebe4dc] bg-white w-full mt-20">
+      <div className="content-container py-16">
+        <div className="grid grid-cols-1 small:grid-cols-3 gap-10">
           <div>
             <LocalizedClientLink
               href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
+              className="text-2xl font-bold tracking-tight text-[#171412]"
             >
-              Medusa Store
+              MizuCat
             </LocalizedClientLink>
+
+            <p className="mt-4 text-sm leading-7 text-[#6b625c] max-w-sm">
+              Hydratation intelligente pour chats d’intérieur. Design premium,
+              livraison rapide et confort quotidien pour votre compagnon.
+            </p>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
-            {productCategories && productCategories?.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Categories
-                </span>
-                <ul
-                  className="grid grid-cols-1 gap-2"
-                  data-testid="footer-categories"
-                >
-                  {productCategories?.slice(0, 6).map((c) => {
-                    if (c.parent_category) {
-                      return
-                    }
 
-                    const children =
-                      c.category_children?.map((child) => ({
-                        name: child.name,
-                        handle: child.handle,
-                        id: child.id,
-                      })) || null
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-[#8a6f55]">
+              Navigation
+            </h3>
 
-                    return (
-                      <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
-                        key={c.id}
-                      >
-                        <LocalizedClientLink
-                          className={clx(
-                            "hover:text-ui-fg-base",
-                            children && "txt-small-plus"
-                          )}
-                          href={`/categories/${c.handle}`}
-                          data-testid="category-link"
-                        >
-                          {c.name}
-                        </LocalizedClientLink>
-                        {children && (
-                          <ul className="grid grid-cols-1 ml-3 gap-2">
-                            {children &&
-                              children.map((child) => (
-                                <li key={child.id}>
-                                  <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
-                                    href={`/categories/${child.handle}`}
-                                    data-testid="category-link"
-                                  >
-                                    {child.name}
-                                  </LocalizedClientLink>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            )}
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Collections
-                </span>
-                <ul
-                  className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
-                    {
-                      "grid-cols-2": (collections?.length || 0) > 3,
-                    }
-                  )}
-                >
-                  {collections?.slice(0, 6).map((c) => (
-                    <li key={c.id}>
-                      <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
-                        href={`/collections/${c.handle}`}
-                      >
-                        {c.title}
-                      </LocalizedClientLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>
-                  <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/medusajs/nextjs-starter-medusa"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Source code
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <ul className="mt-4 flex flex-col gap-3 text-sm text-[#5f5a55]">
+              <li>
+                <LocalizedClientLink href="/" className="hover:text-black transition">
+                  Accueil
+                </LocalizedClientLink>
+              </li>
+              <li>
+                <LocalizedClientLink href="/store" className="hover:text-black transition">
+                  Boutique
+                </LocalizedClientLink>
+              </li>
+              <li>
+                <LocalizedClientLink href="/cart" className="hover:text-black transition">
+                  Panier
+                </LocalizedClientLink>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="text-sm font-bold uppercase tracking-widest text-[#8a6f55]">
+              Informations
+            </h3>
+
+            <ul className="mt-4 flex flex-col gap-3 text-sm text-[#5f5a55]">
+              <li>Livraison rapide Suisse</li>
+              <li>Paiement sécurisé</li>
+              <li>Support client 7j/7</li>
+              <li>Garantie satisfaction</li>
+            </ul>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
-          <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Medusa Store. All rights reserved.
-          </Text>
-          <MedusaCTA />
+
+        <div className="mt-16 border-t border-[#ebe4dc] pt-8">
+          <div className="flex flex-col small:flex-row items-center justify-between gap-6">
+            <Text className="text-sm text-[#7a716b]">
+              © {new Date().getFullYear()} MizuCat. Tous droits réservés.
+            </Text>
+
+            <div className="flex flex-col small:flex-row items-center gap-3 small:gap-6 text-sm text-[#7a716b]">
+              <div className="flex items-center gap-4">
+                <span className="font-medium">CHF</span>
+                <span className="font-medium">Suisse</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

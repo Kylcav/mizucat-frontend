@@ -41,6 +41,7 @@ const Payment = ({
   const setPaymentMethod = async (method: string) => {
     setError(null)
     setSelectedPaymentMethod(method)
+
     if (isStripeLike(method)) {
       await initiatePaymentSession(cart, {
         provider_id: method,
@@ -72,6 +73,7 @@ const Payment = ({
 
   const handleSubmit = async () => {
     setIsLoading(true)
+
     try {
       const shouldInputCard =
         isStripeLike(selectedPaymentMethod) && !activeSession
@@ -117,9 +119,10 @@ const Payment = ({
             }
           )}
         >
-          Payment
+          Paiement
           {!isOpen && paymentReady && <CheckCircleSolid />}
         </Heading>
+
         {!isOpen && paymentReady && (
           <Text>
             <button
@@ -127,11 +130,12 @@ const Payment = ({
               className="text-ui-fg-interactive hover:text-ui-fg-interactive-hover"
               data-testid="edit-payment-button"
             >
-              Edit
+              Modifier
             </button>
           </Text>
         )}
       </div>
+
       <div>
         <div className={isOpen ? "block" : "hidden"}>
           {!paidByGiftcard && availablePaymentMethods?.length && (
@@ -167,13 +171,14 @@ const Payment = ({
           {paidByGiftcard && (
             <div className="flex flex-col w-1/3">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                Payment method
+                Méthode de paiement
               </Text>
+
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                Gift card
+                Carte cadeau
               </Text>
             </div>
           )}
@@ -195,8 +200,8 @@ const Payment = ({
             data-testid="submit-payment-button"
           >
             {!activeSession && isStripeLike(selectedPaymentMethod)
-              ? " Enter card details"
-              : "Continue to review"}
+              ? "Entrer les informations de la carte"
+              : "Continuer vers la vérification"}
           </Button>
         </div>
 
@@ -205,8 +210,9 @@ const Payment = ({
             <div className="flex items-start gap-x-1 w-full">
               <div className="flex flex-col w-1/3">
                 <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  Payment method
+                  Méthode de paiement
                 </Text>
+
                 <Text
                   className="txt-medium text-ui-fg-subtle"
                   data-testid="payment-method-summary"
@@ -215,10 +221,12 @@ const Payment = ({
                     activeSession?.provider_id}
                 </Text>
               </div>
+
               <div className="flex flex-col w-1/3">
                 <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  Payment details
+                  Détails du paiement
                 </Text>
+
                 <div
                   className="flex gap-2 txt-medium text-ui-fg-subtle items-center"
                   data-testid="payment-details-summary"
@@ -228,10 +236,11 @@ const Payment = ({
                       <CreditCard />
                     )}
                   </Container>
+
                   <Text>
                     {isStripeLike(selectedPaymentMethod) && cardBrand
                       ? cardBrand
-                      : "Another step will appear"}
+                      : "Une autre étape va apparaître"}
                   </Text>
                 </div>
               </div>
@@ -239,18 +248,20 @@ const Payment = ({
           ) : paidByGiftcard ? (
             <div className="flex flex-col w-1/3">
               <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                Payment method
+                Méthode de paiement
               </Text>
+
               <Text
                 className="txt-medium text-ui-fg-subtle"
                 data-testid="payment-method-summary"
               >
-                Gift card
+                Carte cadeau
               </Text>
             </div>
           ) : null}
         </div>
       </div>
+
       <Divider className="mt-8" />
     </div>
   )

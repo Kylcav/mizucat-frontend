@@ -13,11 +13,11 @@ const CartTemplate = ({
   customer: HttpTypes.StoreCustomer | null
 }) => {
   return (
-    <div className="py-12">
+    <div className="py-8 small:py-12 bg-[#fbfaf7] min-h-screen">
       <div className="content-container" data-testid="cart-container">
         {cart?.items?.length ? (
           <div className="grid grid-cols-1 small:grid-cols-[1fr_360px] gap-x-40">
-            <div className="flex flex-col bg-white py-6 gap-y-6">
+            <div className="flex flex-col bg-white p-5 small:p-6 gap-y-6 rounded-3xl shadow-sm">
               {!customer && (
                 <>
                   <SignInPrompt />

@@ -127,12 +127,13 @@ export default function ProductActions({
     setIsAdding(true)
 
     await addToCart({
-      variantId: selectedVariant.id,
-      quantity: 1,
-      countryCode,
-    })
+  variantId: selectedVariant.id,
+  quantity: 1,
+  countryCode,
+})
 
-    setIsAdding(false)
+setIsAdding(false)
+router.push(`/${countryCode}/cart`)
   }
 
   return (
@@ -163,25 +164,25 @@ export default function ProductActions({
         <ProductPrice product={product} variant={selectedVariant} />
 
         <Button
-          onClick={handleAddToCart}
-          disabled={
-            !inStock ||
-            !selectedVariant ||
-            !!disabled ||
-            isAdding ||
-            !isValidVariant
-          }
-          variant="primary"
-          className="w-full h-10"
-          isLoading={isAdding}
-          data-testid="add-product-button"
-        >
-          {!selectedVariant && !options
-            ? "Select variant"
-            : !inStock || !isValidVariant
-            ? "Out of stock"
-            : "Add to cart"}
-        </Button>
+  onClick={handleAddToCart}
+  disabled={
+    !inStock ||
+    !selectedVariant ||
+    !!disabled ||
+    isAdding ||
+    !isValidVariant
+  }
+  variant="primary"
+  className="w-full h-14 rounded-full bg-[#171412] text-white text-base font-bold hover:bg-black"
+  isLoading={isAdding}
+  data-testid="add-product-button"
+>
+  {!selectedVariant && !options
+    ? "Choisir une option"
+    : !inStock || !isValidVariant
+    ? "Victime de son succès"
+    : "Ajouter au panier"}
+</Button>
         <MobileActions
           product={product}
           variant={selectedVariant}

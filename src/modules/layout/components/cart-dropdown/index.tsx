@@ -54,7 +54,7 @@ const CartDropdown = ({
     open()
   }
 
-  // Clean up the timer when the component unmounts
+  // Nettoyage du timer lorsque le composant est démonté
   useEffect(() => {
     return () => {
       if (activeTimer) {
@@ -65,12 +65,11 @@ const CartDropdown = ({
 
   const pathname = usePathname()
 
-  // open cart dropdown when modifying the cart items, but only if we're not on the cart page
+  // Ouvre le dropdown du panier lorsqu’un produit est ajouté
   useEffect(() => {
     if (itemRef.current !== totalItems && !pathname.includes("/cart")) {
       timedOpen()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalItems, itemRef.current])
 
   return (
@@ -85,8 +84,11 @@ const CartDropdown = ({
             className="hover:text-ui-fg-base"
             href="/cart"
             data-testid="nav-cart-link"
-          >{`Cart (${totalItems})`}</LocalizedClientLink>
+          >
+            {`Panier (${totalItems})`}
+          </LocalizedClientLink>
         </PopoverButton>
+
         <Transition
           show={cartDropdownOpen}
           as={Fragment}
@@ -103,8 +105,9 @@ const CartDropdown = ({
             data-testid="nav-cart-dropdown"
           >
             <div className="p-4 flex items-center justify-center">
-              <h3 className="text-large-semi">Cart</h3>
+              <h3 className="text-large-semi">Panier</h3>
             </div>
+
             {cartState && cartState.items?.length ? (
               <>
                 <div className="overflow-y-scroll max-h-[402px] px-4 grid grid-cols-1 gap-y-8 no-scrollbar p-px">
@@ -130,6 +133,7 @@ const CartDropdown = ({
                             size="square"
                           />
                         </LocalizedClientLink>
+
                         <div className="flex flex-col justify-between flex-1">
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
@@ -142,18 +146,21 @@ const CartDropdown = ({
                                     {item.title}
                                   </LocalizedClientLink>
                                 </h3>
+
                                 <LineItemOptions
                                   variant={item.variant}
                                   data-testid="cart-item-variant"
                                   data-value={item.variant}
                                 />
+
                                 <span
                                   data-testid="cart-item-quantity"
                                   data-value={item.quantity}
                                 >
-                                  Quantity: {item.quantity}
+                                  Quantité : {item.quantity}
                                 </span>
                               </div>
+
                               <div className="flex justify-end">
                                 <LineItemPrice
                                   item={item}
@@ -163,23 +170,26 @@ const CartDropdown = ({
                               </div>
                             </div>
                           </div>
+
                           <DeleteButton
                             id={item.id}
                             className="mt-1"
                             data-testid="cart-item-remove-button"
                           >
-                            Remove
+                            Supprimer
                           </DeleteButton>
                         </div>
                       </div>
                     ))}
                 </div>
+
                 <div className="p-4 flex flex-col gap-y-4 text-small-regular">
                   <div className="flex items-center justify-between">
                     <span className="text-ui-fg-base font-semibold">
-                      Subtotal{" "}
-                      <span className="font-normal">(excl. taxes)</span>
+                      Sous-total{" "}
+                      <span className="font-normal">(hors taxes)</span>
                     </span>
+
                     <span
                       className="text-large-semi"
                       data-testid="cart-subtotal"
@@ -191,13 +201,14 @@ const CartDropdown = ({
                       })}
                     </span>
                   </div>
+
                   <LocalizedClientLink href="/cart" passHref>
                     <Button
                       className="w-full"
                       size="large"
                       data-testid="go-to-cart-button"
                     >
-                      Go to cart
+                      Voir le panier
                     </Button>
                   </LocalizedClientLink>
                 </div>
@@ -208,12 +219,19 @@ const CartDropdown = ({
                   <div className="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">
                     <span>0</span>
                   </div>
-                  <span>Your shopping bag is empty.</span>
+
+                  <span>Votre panier est vide.</span>
+
                   <div>
                     <LocalizedClientLink href="/store">
                       <>
-                        <span className="sr-only">Go to all products page</span>
-                        <Button onClick={close}>Explore products</Button>
+                        <span className="sr-only">
+                          Aller à la page des produits
+                        </span>
+
+                        <Button onClick={close}>
+                          Découvrir les produits
+                        </Button>
                       </>
                     </LocalizedClientLink>
                   </div>

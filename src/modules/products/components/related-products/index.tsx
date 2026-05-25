@@ -20,17 +20,21 @@ export default async function RelatedProducts({
 
   // edit this function to define your related products logic
   const queryParams: HttpTypes.StoreProductListParams = {}
+
   if (region?.id) {
     queryParams.region_id = region.id
   }
+
   if (product.collection_id) {
     queryParams.collection_id = [product.collection_id]
   }
+
   if (product.tags) {
     queryParams.tag_id = product.tags
       .map((t) => t.id)
       .filter(Boolean) as string[]
   }
+
   queryParams.is_giftcard = false
 
   const products = await listProducts({
@@ -50,10 +54,11 @@ export default async function RelatedProducts({
     <div className="product-page-constraint">
       <div className="flex flex-col items-center text-center mb-16">
         <span className="text-base-regular text-gray-600 mb-6">
-          Related products
+          Produits similaires
         </span>
+
         <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
+          Vous pourriez aussi aimer ces produits.
         </p>
       </div>
 
