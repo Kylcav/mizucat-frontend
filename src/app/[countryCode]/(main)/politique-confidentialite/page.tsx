@@ -1,4 +1,10 @@
-export default function PolitiqueConfidentialitePage() {
+export default function ConditionsGeneralesPage({
+  params,
+}: {
+  params: { countryCode: string }
+}) {
+  const { countryCode } = params
+
   const sections = [
     {
       number: "01.",
@@ -44,7 +50,7 @@ export default function PolitiqueConfidentialitePage() {
         {/* TOP BAR */}
         <div className="mb-24 flex justify-end">
           <a
-            href="/dk/checkout?step=review"
+            href={`/${countryCode}/checkout?step=review`}
             className="rounded-full border border-[#e7ddd3] bg-white px-5 py-2.5 text-sm font-semibold text-[#6a5b50] shadow-sm transition hover:bg-[#f4ede6]"
           >
             ← Retour
