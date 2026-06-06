@@ -1,7 +1,6 @@
 import React, { Suspense } from "react"
 
 import ImageGallery from "@modules/products/components/image-gallery"
-import MetaViewContent from "@modules/products/components/meta-view-content"
 import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
@@ -32,8 +31,6 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
   return (
     <>
-      <MetaViewContent product={product} />
-
       {/* Mobile */}
       <div
         className="content-container flex flex-col py-6 small:hidden"
@@ -67,7 +64,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
         </div>
       </div>
 
-      {/* Desktop inchangé */}
+      {/* Desktop */}
       <div
         className="content-container hidden small:flex small:flex-row small:items-start py-6 relative"
         data-testid="product-container"

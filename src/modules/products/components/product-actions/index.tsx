@@ -1,7 +1,6 @@
 "use client"
 
 import { addToCart } from "@lib/data/cart"
-import { fbq } from "@lib/meta-pixel"
 import { useIntersection } from "@lib/hooks/use-in-view"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
@@ -125,16 +124,6 @@ export default function ProductActions({
         variantId: selectedVariant.id,
         quantity: 1,
         countryCode,
-      })
-
-      fbq("AddToCart", {
-        content_ids: [selectedVariant.id],
-        content_name: product.title,
-        content_type: "product",
-        value: selectedVariant.calculated_price?.calculated_amount || 0,
-        currency:
-          selectedVariant.calculated_price?.currency_code?.toUpperCase() ||
-          "CHF",
       })
 
       router.push(`/${countryCode}/cart`)
