@@ -19,7 +19,7 @@ const Review = ({ cart }: { cart: any }) => {
     (cart.payment_collection || paidByGiftcard)
 
   return (
-    <div className="bg-white">
+    <div className="bg-white" data-checkout-step="review">
       <div className="flex flex-row items-center justify-between mb-6">
         <Heading
           level="h2"
@@ -42,6 +42,8 @@ const Review = ({ cart }: { cart: any }) => {
                 En passant votre commande, vous acceptez nos{" "}
                 <a
                   href="/conditions-generales"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="underline hover:text-ui-fg-interactive"
                 >
                   Conditions générales de vente
@@ -49,6 +51,8 @@ const Review = ({ cart }: { cart: any }) => {
                 et notre{" "}
                 <a
                   href="/politique-confidentialite"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="underline hover:text-ui-fg-interactive"
                 >
                   Politique de confidentialité

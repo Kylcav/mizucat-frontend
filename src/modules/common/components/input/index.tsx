@@ -40,14 +40,14 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )}
         <div className="flex relative z-0 w-full txt-compact-medium">
           <input
-            type={inputType}
-            name={name}
-            placeholder=" "
-            required={required}
-            className="pt-4 pb-1 block w-full h-11 px-4 mt-0 bg-ui-bg-field border rounded-md appearance-none focus:outline-none focus:ring-0 focus:shadow-borders-interactive-with-active border-ui-border-base hover:bg-ui-bg-field-hover"
-            {...props}
-            ref={inputRef}
-          />
+  type={inputType}
+  name={name}
+  placeholder=" "
+  required={required}
+  className="text-base md:text-sm pt-4 pb-1 block w-full h-11 px-4 mt-0 bg-ui-bg-field border rounded-md appearance-none focus:outline-none focus:ring-0 focus:shadow-borders-interactive-with-active border-ui-border-base hover:bg-ui-bg-field-hover"
+  {...props}
+  ref={inputRef}
+/>
           <label
             htmlFor={name}
             onClick={() => inputRef.current?.focus()}

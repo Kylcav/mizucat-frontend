@@ -3,6 +3,7 @@ import { cookies as nextCookies } from "next/headers"
 
 import CartTotals from "@modules/common/components/cart-totals"
 import Items from "@modules/order/components/items"
+import MetaPurchase from "@modules/order/components/meta-purchase"
 import OnboardingCta from "@modules/order/components/onboarding-cta"
 import OrderDetails from "@modules/order/components/order-details"
 import ShippingDetails from "@modules/order/components/shipping-details"
@@ -22,8 +23,11 @@ export default async function OrderCompletedTemplate({
 
   return (
     <div className="py-6 min-h-[calc(100vh-64px)]">
+      <MetaPurchase order={order} />
+
       <div className="content-container flex flex-col justify-center items-center gap-y-10 max-w-4xl h-full w-full">
         {isOnboarding && <OnboardingCta orderId={order.id} />}
+
         <div
           className="flex flex-col gap-4 max-w-4xl h-full bg-white w-full py-10"
           data-testid="order-complete-container"

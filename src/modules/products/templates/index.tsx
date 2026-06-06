@@ -1,6 +1,7 @@
 import React, { Suspense } from "react"
 
 import ImageGallery from "@modules/products/components/image-gallery"
+import MetaViewContent from "@modules/products/components/meta-view-content"
 import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
 import ProductTabs from "@modules/products/components/product-tabs"
@@ -31,17 +32,55 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
 
   return (
     <>
+      <MetaViewContent product={product} />
+
+      {/* Mobile */}
       <div
-        className="content-container  flex flex-col small:flex-row small:items-start py-6 relative"
+        className="content-container flex flex-col py-6 small:hidden"
+        data-testid="product-container-mobile"
+      >
+        <div className="py-8">
+          <ProductInfo product={product} />
+        </div>
+
+        <div className="block w-full relative">
+          <ImageGallery images={images} product={product} />
+        </div>
+
+        <div className="py-8">
+          <ProductTabs product={product} />
+        </div>
+
+        <div className="flex flex-col gap-y-12 pb-8">
+          <ProductOnboardingCta />
+          <Suspense
+            fallback={
+              <ProductActions
+                disabled={true}
+                product={product}
+                region={region}
+              />
+            }
+          >
+            <ProductActionsWrapper id={product.id} region={region} />
+          </Suspense>
+        </div>
+      </div>
+
+      {/* Desktop inchangé */}
+      <div
+        className="content-container hidden small:flex small:flex-row small:items-start py-6 relative"
         data-testid="product-container"
       >
         <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-6">
           <ProductInfo product={product} />
           <ProductTabs product={product} />
         </div>
+
         <div className="block w-full relative">
-          <ImageGallery images={images} />
+          <ImageGallery images={images} product={product} />
         </div>
+
         <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[300px] w-full py-8 gap-y-12">
           <ProductOnboardingCta />
           <Suspense
@@ -57,6 +96,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           </Suspense>
         </div>
       </div>
+
       <div
         className="content-container my-16 small:my-32"
         data-testid="related-products-container"

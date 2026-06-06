@@ -26,46 +26,57 @@ export default async function Home(props: { params: Promise<{ countryCode: strin
 
   return (
     <main className="bg-[#fbfaf7] text-[#171412]">
-      <section className="relative min-h-[92vh] overflow-hidden">
-        <div className="absolute inset-0">
-          {image ? (
-            <Image
-              src={image}
-              alt={product.title}
-              fill
-              priority
-              className="object-cover"
-              sizes="100vw"
-            />
-          ) : (
-            <div className="h-full w-full bg-[#e8ded2]" />
-          )}
-          <div className="absolute inset-0 bg-black/45" />
-        </div>
+      <section className="relative min-h-[72vh] overflow-hidden small:min-h-[92vh]">
+  <div className="absolute inset-0">
+   {/* Vidéo desktop */}
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  className="hidden h-full w-full object-cover object-center small:block"
+>
+  <source src="/fontaine-a-eau-pour-chat.mp4" type="video/mp4" />
+</video>
 
-        <div className="content-container relative z-10 flex min-h-[92vh] items-end pb-10 small:items-center small:pb-0">
-          <div className="max-w-xl text-white">
-            <p className="mb-4 inline-flex rounded-full bg-white/20 px-4 py-2 text-[11px] font-bold uppercase tracking-widest backdrop-blur">
-              Livraison rapide Suisse
-            </p>
+{/* Vidéo mobile */}
+<video
+  autoPlay
+  muted
+  loop
+  playsInline
+  preload="auto"
+  className="block h-full w-full object-cover object-center small:hidden"
+>
+  <source src="/fontaine-a-eau-pour-chat-mobile.mp4" type="video/mp4" />
+</video>
 
-            <h1 className="text-4xl font-bold leading-[0.95] tracking-[-0.04em] small:text-7xl">
-              Aidez votre chat à boire plus naturellement.
-            </h1>
+<div className="absolute inset-0 bg-black/45" />
+  </div>
 
-            <p className="mt-5 text-base leading-7 text-white/90 small:text-lg">
-              Une fontaine à eau silencieuse, élégante et pensée pour garder une eau fraîche en mouvement toute la journée.
-            </p>
+  <div className="content-container relative z-10 flex min-h-[72vh] items-start pt-8 pb-6 small:min-h-[92vh] small:items-center small:pt-0 small:pb-0">
+    <div className="max-w-xl text-white">
+      <p className="mb-5 inline-flex rounded-full bg-white/20 px-5 py-3 text-[11px] font-bold uppercase tracking-widest backdrop-blur">
+        Livraison rapide Suisse
+      </p>
 
-            <a
-              href="#commander"
-              className="mt-7 inline-flex h-14 w-full items-center justify-center rounded-full bg-white px-8 text-sm font-bold text-[#171412] small:w-auto"
-            >
-              Commander maintenant
-            </a>
-          </div>
-        </div>
-      </section>
+      <h1 className="text-[42px] font-bold leading-[0.95] tracking-[-0.04em] small:text-7xl">
+        Aidez votre chat à boire plus naturellement.
+      </h1>
+
+      <p className="mt-6 text-[20px] leading-8 text-white/90 small:text-lg">
+        Une fontaine à eau silencieuse, élégante et pensée pour garder une eau fraîche en permanence.
+      </p>
+
+      <div className="mt-6 flex flex-wrap gap-x-4 gap-y-3 text-sm font-medium text-white">
+        <span>✓ Silencieuse</span>
+        <span>✓ Filtration avancée</span>
+        <span>✓ Design élégant</span>
+      </div>
+    </div>
+  </div>
+</section>
 
       <section id="commander" className="content-container scroll-mt-20 py-12 small:py-24">
         <div className="grid grid-cols-1 gap-8 small:grid-cols-2 small:gap-16">

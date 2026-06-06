@@ -16,15 +16,11 @@ import {
 import { getRegion } from "./regions"
 import { getLocale } from "@lib/data/locale-actions"
 
-/**
- * Retrieves a cart by its ID. If no ID is provided, it will use the cart ID from the cookies.
- * @param cartId - optional - The ID of the cart to retrieve.
- * @returns The cart object if found, or null if not found.
- */
 export async function retrieveCart(cartId?: string, fields?: string) {
   const id = cartId || (await getCartId())
+
   fields ??=
-  "*items, *region, *items.product, *items.variant, *items.variant.images, *items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name"
+    "*items, *region, *items.product, *items.variant, *items.variant.images, *items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name"
 
   if (!id) {
     return null
@@ -67,11 +63,13 @@ export async function getOrSetCart(countryCode: string) {
 
   if (!cart) {
     const locale = await getLocale()
+
     const cartResp = await sdk.store.cart.create(
       { region_id: region.id, locale: locale || undefined },
       {},
       headers
     )
+
     cart = cartResp.cart
 
     await setCartId(cart.id)
@@ -82,6 +80,7 @@ export async function getOrSetCart(countryCode: string) {
 
   if (cart && cart?.region_id !== region.id) {
     await sdk.store.cart.update(cart.id, { region_id: region.id }, {}, headers)
+
     const cartCacheTag = await getCacheTag("carts")
     revalidateTag(cartCacheTag)
   }
@@ -250,6 +249,7 @@ export async function initiatePaymentSession(
     .then(async (resp) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
+
       return resp
     })
     .catch(medusaError)
@@ -279,46 +279,15 @@ export async function applyPromotions(codes: string[]) {
 }
 
 export async function applyGiftCard(code: string) {
-  //   const cartId = getCartId()
-  //   if (!cartId) return "No cartId cookie found"
-  //   try {
-  //     await updateCart(cartId, { gift_cards: [{ code }] }).then(() => {
-  //       revalidateTag("cart")
-  //     })
-  //   } catch (error: any) {
-  //     throw error
-  //   }
+  // Fonction conservée pour ne pas casser les imports existants.
 }
 
 export async function removeDiscount(code: string) {
-  // const cartId = getCartId()
-  // if (!cartId) return "No cartId cookie found"
-  // try {
-  //   await deleteDiscount(cartId, code)
-  //   revalidateTag("cart")
-  // } catch (error: any) {
-  //   throw error
-  // }
+  // Fonction conservée pour ne pas casser les imports existants.
 }
 
-export async function removeGiftCard(
-  codeToRemove: string,
-  giftCards: any[]
-  // giftCards: GiftCard[]
-) {
-  //   const cartId = getCartId()
-  //   if (!cartId) return "No cartId cookie found"
-  //   try {
-  //     await updateCart(cartId, {
-  //       gift_cards: [...giftCards]
-  //         .filter((gc) => gc.code !== codeToRemove)
-  //         .map((gc) => ({ code: gc.code })),
-  //     }).then(() => {
-  //       revalidateTag("cart")
-  //     })
-  //   } catch (error: any) {
-  //     throw error
-  //   }
+export async function removeGiftCard(codeToRemove: string, giftCards: any[]) {
+  // Fonction conservée pour ne pas casser les imports existants.
 }
 
 export async function submitPromotionForm(
@@ -326,6 +295,7 @@ export async function submitPromotionForm(
   formData: FormData
 ) {
   const code = formData.get("code") as string
+
   try {
     await applyPromotions([code])
   } catch (e: any) {
@@ -333,13 +303,14 @@ export async function submitPromotionForm(
   }
 }
 
-// TODO: Pass a POJO instead of a form entity here
 export async function setAddresses(currentState: unknown, formData: FormData) {
   try {
     if (!formData) {
       throw new Error("No form data found when setting addresses")
     }
-    const cartId = getCartId()
+
+    const cartId = await getCartId()
+
     if (!cartId) {
       throw new Error("No existing cart found when setting addresses")
     }
@@ -361,9 +332,12 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     } as any
 
     const sameAsBilling = formData.get("same_as_billing")
-    if (sameAsBilling === "on") data.billing_address = data.shipping_address
 
-    if (sameAsBilling !== "on")
+    if (sameAsBilling === "on") {
+      data.billing_address = data.shipping_address
+    }
+
+    if (sameAsBilling !== "on") {
       data.billing_address = {
         first_name: formData.get("billing_address.first_name"),
         last_name: formData.get("billing_address.last_name"),
@@ -376,20 +350,19 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
         province: formData.get("billing_address.province"),
         phone: formData.get("billing_address.phone"),
       }
+    }
+
     await updateCart(data)
   } catch (e: any) {
     return e.message
   }
 
-  redirect(`/${formData.get("shipping_address.country_code")}/checkout?step=delivery`)
+  redirect(
+    `/${formData.get("shipping_address.country_code")}/checkout?step=delivery`
+  )
 }
 
-/**
- * Places an order for a cart. If no cart ID is provided, it will use the cart ID from the cookies.
- * @param cartId - optional - The ID of the cart to place an order for.
- * @returns The cart object if the order was successful, or null if not.
- */
-export async function placeOrder(cartId?: string) {
+export async function completeCartAndGetRedirectUrl(cartId?: string) {
   const id = cartId || (await getCartId())
 
   if (!id) {
@@ -405,29 +378,43 @@ export async function placeOrder(cartId?: string) {
     .then(async (cartRes) => {
       const cartCacheTag = await getCacheTag("carts")
       revalidateTag(cartCacheTag)
+
       return cartRes
     })
     .catch(medusaError)
 
   if (cartRes?.type === "order") {
     const countryCode =
-      cartRes.order.shipping_address?.country_code?.toLowerCase()
+      cartRes.order.shipping_address?.country_code?.toLowerCase() || "ch"
 
     const orderCacheTag = await getCacheTag("orders")
     revalidateTag(orderCacheTag)
 
-    removeCartId()
-    redirect(`/${countryCode}/order/${cartRes?.order.id}/confirmed`)
+    await removeCartId()
+
+    return {
+      type: "order" as const,
+      orderId: cartRes.order.id,
+      redirectUrl: `/${countryCode}/order/${cartRes.order.id}/confirmed`,
+    }
   }
 
-  return cartRes.cart
+  return {
+    type: "cart" as const,
+    cart: cartRes.cart,
+  }
 }
 
-/**
- * Updates the countrycode param and revalidates the regions cache
- * @param regionId
- * @param countryCode
- */
+export async function placeOrder(cartId?: string) {
+  const result = await completeCartAndGetRedirectUrl(cartId)
+
+  if (result.type === "order") {
+    redirect(result.redirectUrl)
+  }
+
+  return result.cart
+}
+
 export async function updateRegion(countryCode: string, currentPath: string) {
   const cartId = await getCartId()
   const region = await getRegion(countryCode)
@@ -438,6 +425,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
 
   if (cartId) {
     await updateCart({ region_id: region.id })
+
     const cartCacheTag = await getCacheTag("carts")
     revalidateTag(cartCacheTag)
   }
@@ -453,9 +441,11 @@ export async function updateRegion(countryCode: string, currentPath: string) {
 
 export async function listCartOptions() {
   const cartId = await getCartId()
+
   const headers = {
     ...(await getAuthHeaders()),
   }
+
   const next = {
     ...(await getCacheOptions("shippingOptions")),
   }

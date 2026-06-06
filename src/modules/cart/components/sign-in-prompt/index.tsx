@@ -3,23 +3,55 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 
 const SignInPrompt = () => {
   return (
-    <div className="bg-white flex items-center justify-between">
-      <div>
-        <Heading level="h2" className="txt-xlarge">
+    <>
+      {/* Mobile */}
+      <div className="bg-white small:hidden">
+        <Heading level="h2" className="txt-xlarge mb-4">
           Vous avez déjà un compte ?
         </Heading>
-        <Text className="txt-medium text-ui-fg-subtle mt-2">
-          Connectez-vous pour une meilleure expérience.
-        </Text>
+
+        <div className="flex items-center justify-between gap-4">
+          <Text className="txt-medium text-ui-fg-subtle">
+            Connectez-vous pour une meilleure expérience.
+          </Text>
+
+          <LocalizedClientLink href="/account">
+            <Button
+              variant="secondary"
+              className="h-10 shrink-0"
+              data-testid="sign-in-button"
+            >
+              Se connecter
+            </Button>
+          </LocalizedClientLink>
+        </div>
       </div>
-      <div>
-        <LocalizedClientLink href="/account">
-          <Button variant="secondary" className="h-10" data-testid="sign-in-button">
-            Se connecter
-          </Button>
-        </LocalizedClientLink>
+
+      {/* Desktop inchangé */}
+      <div className="hidden small:flex bg-white items-center justify-between">
+        <div>
+          <Heading level="h2" className="txt-xlarge">
+            Vous avez déjà un compte ?
+          </Heading>
+
+          <Text className="txt-medium text-ui-fg-subtle mt-2">
+            Connectez-vous pour une meilleure expérience.
+          </Text>
+        </div>
+
+        <div>
+          <LocalizedClientLink href="/account">
+            <Button
+              variant="secondary"
+              className="h-10"
+              data-testid="sign-in-button"
+            >
+              Se connecter
+            </Button>
+          </LocalizedClientLink>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

@@ -93,81 +93,75 @@ const Addresses = ({
         <div>
           <div className="text-small-regular">
             {cart && cart.shipping_address ? (
-              <div className="flex items-start gap-x-8">
-                <div className="flex items-start gap-x-1 w-full">
-                  <div
-                    className="flex flex-col w-1/3"
-                    data-testid="shipping-address-summary"
-                  >
-                    <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                      Adresse de livraison
-                    </Text>
-                    <Text className="txt-medium text-ui-fg-subtle">
-                      {cart.shipping_address.first_name}{" "}
-                      {cart.shipping_address.last_name}
-                    </Text>
-                    <Text className="txt-medium text-ui-fg-subtle">
-                      {cart.shipping_address.address_1}{" "}
-                      {cart.shipping_address.address_2}
-                    </Text>
-                    <Text className="txt-medium text-ui-fg-subtle">
-                      {cart.shipping_address.postal_code},{" "}
-                      {cart.shipping_address.city}
-                    </Text>
-                    <Text className="txt-medium text-ui-fg-subtle">
-                      {cart.shipping_address.country_code?.toUpperCase()}
-                    </Text>
-                  </div>
+              <div className="w-full">
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-y-6 md:gap-x-8 w-full">
+    <div
+      className="flex flex-col w-full min-w-0"
+      data-testid="shipping-address-summary"
+    >
+      <Text className="txt-medium-plus text-ui-fg-base mb-1">
+        Adresse de livraison
+      </Text>
+      <Text className="txt-medium text-ui-fg-subtle">
+        {cart.shipping_address.first_name} {cart.shipping_address.last_name}
+      </Text>
+      <Text className="txt-medium text-ui-fg-subtle">
+        {cart.shipping_address.address_1} {cart.shipping_address.address_2}
+      </Text>
+      <Text className="txt-medium text-ui-fg-subtle">
+        {cart.shipping_address.postal_code}, {cart.shipping_address.city}
+      </Text>
+      <Text className="txt-medium text-ui-fg-subtle">
+        {cart.shipping_address.country_code?.toUpperCase()}
+      </Text>
+    </div>
 
-                  <div
-                    className="flex flex-col w-1/3 "
-                    data-testid="shipping-contact-summary"
-                  >
-                    <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                      Contact
-                    </Text>
-                    <Text className="txt-medium text-ui-fg-subtle">
-                      {cart.shipping_address.phone}
-                    </Text>
-                    <Text className="txt-medium text-ui-fg-subtle">
-                      {cart.email}
-                    </Text>
-                  </div>
+    <div
+      className="flex flex-col w-full min-w-0"
+      data-testid="shipping-contact-summary"
+    >
+      <Text className="txt-medium-plus text-ui-fg-base mb-1">
+        Contact
+      </Text>
+      <Text className="txt-medium text-ui-fg-subtle">
+        {cart.shipping_address.phone}
+      </Text>
+      <Text className="txt-medium text-ui-fg-subtle break-words">
+        {cart.email}
+      </Text>
+    </div>
 
-                  <div
-                    className="flex flex-col w-1/3"
-                    data-testid="billing-address-summary"
-                  >
-                    <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                      Adresse de facturation
-                    </Text>
+    <div
+      className="flex flex-col w-full min-w-0"
+      data-testid="billing-address-summary"
+    >
+      <Text className="txt-medium-plus text-ui-fg-base mb-1">
+        Adresse de facturation
+      </Text>
 
-                    {sameAsBilling ? (
-                      <Text className="txt-medium text-ui-fg-subtle">
-                        Les adresses de facturation et de livraison sont les mêmes.
-                      </Text>
-                    ) : (
-                      <>
-                        <Text className="txt-medium text-ui-fg-subtle">
-                          {cart.billing_address?.first_name}{" "}
-                          {cart.billing_address?.last_name}
-                        </Text>
-                        <Text className="txt-medium text-ui-fg-subtle">
-                          {cart.billing_address?.address_1}{" "}
-                          {cart.billing_address?.address_2}
-                        </Text>
-                        <Text className="txt-medium text-ui-fg-subtle">
-                          {cart.billing_address?.postal_code},{" "}
-                          {cart.billing_address?.city}
-                        </Text>
-                        <Text className="txt-medium text-ui-fg-subtle">
-                          {cart.billing_address?.country_code?.toUpperCase()}
-                        </Text>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
+      {sameAsBilling ? (
+        <Text className="txt-medium text-ui-fg-subtle">
+          Les adresses de facturation et de livraison sont les mêmes.
+        </Text>
+      ) : (
+        <>
+          <Text className="txt-medium text-ui-fg-subtle">
+            {cart.billing_address?.first_name} {cart.billing_address?.last_name}
+          </Text>
+          <Text className="txt-medium text-ui-fg-subtle">
+            {cart.billing_address?.address_1} {cart.billing_address?.address_2}
+          </Text>
+          <Text className="txt-medium text-ui-fg-subtle">
+            {cart.billing_address?.postal_code}, {cart.billing_address?.city}
+          </Text>
+          <Text className="txt-medium text-ui-fg-subtle">
+            {cart.billing_address?.country_code?.toUpperCase()}
+          </Text>
+        </>
+      )}
+    </div>
+  </div>
+</div>
             ) : (
               <div>
                 <Spinner />

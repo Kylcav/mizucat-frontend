@@ -127,11 +127,11 @@ const CartDropdown = ({
                           href={`/products/${item.product_handle}`}
                           className="w-24"
                         >
-                          <Thumbnail
-                            thumbnail={item.thumbnail}
-                            images={item.variant?.product?.images}
-                            size="square"
-                          />
+                         <Thumbnail
+  thumbnail={item.variant?.images?.[0]?.url || item.thumbnail}
+  images={item.variant?.images || item.variant?.product?.images}
+  size="square"
+/>
                         </LocalizedClientLink>
 
                         <div className="flex flex-col justify-between flex-1">

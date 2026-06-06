@@ -3,11 +3,10 @@ import { Text, clx } from "@medusajs/ui"
 import React, { useContext, useMemo, type JSX } from "react"
 
 import Radio from "@modules/common/components/radio"
-
 import { isManual } from "@lib/constants"
 import SkeletonCardDetails from "@modules/skeletons/components/skeleton-card-details"
-import { CardElement } from "@stripe/react-stripe-js"
-import { StripeCardElementOptions } from "@stripe/stripe-js"
+import { PaymentElement } from "@stripe/react-stripe-js"
+import type { StripePaymentElementOptions } from "@stripe/stripe-js"
 import PaymentTest from "../payment-test"
 import { StripeContext } from "../payment-wrapper/stripe-wrapper"
 
@@ -41,7 +40,7 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
         }
       )}
     >
-      <div className="flex items-center justify-between ">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-x-4">
           <Radio checked={selectedPaymentOptionId === paymentProviderId} />
           <Text className="text-base-regular">
@@ -51,13 +50,16 @@ const PaymentContainer: React.FC<PaymentContainerProps> = ({
             <PaymentTest className="hidden small:block" />
           )}
         </div>
+
         <span className="justify-self-end text-ui-fg-base">
           {paymentInfoMap[paymentProviderId]?.icon}
         </span>
       </div>
+
       {isManual(paymentProviderId) && isDevelopment && (
         <PaymentTest className="small:hidden text-[10px]" />
       )}
+
       {children}
     </RadioGroupOption>
   )
@@ -80,20 +82,12 @@ export const StripeCardContainer = ({
 }) => {
   const stripeReady = useContext(StripeContext)
 
-  const useOptions: StripeCardElementOptions = useMemo(() => {
+  const paymentElementOptions: StripePaymentElementOptions = useMemo(() => {
     return {
-      style: {
-        base: {
-          fontFamily: "Inter, sans-serif",
-          color: "#424270",
-          "::placeholder": {
-            color: "rgb(107 114 128)",
-          },
-        },
+      layout: {
+        type: "tabs",
       },
-      classes: {
-        base: "pt-3 pb-1 block w-full h-11 px-4 mt-0 bg-ui-bg-field border rounded-md appearance-none focus:outline-none focus:ring-0 focus:shadow-borders-interactive-with-active border-ui-border-base hover:bg-ui-bg-field-hover transition-all duration-300 ease-in-out",
-      },
+      paymentMethodOrder: ["card", "twint", "paypal"],
     }
   }, [])
 
@@ -107,19 +101,47 @@ export const StripeCardContainer = ({
       {selectedPaymentOptionId === paymentProviderId &&
         (stripeReady ? (
           <div className="my-4 transition-all duration-150 ease-in-out">
-            <Text className="txt-medium-plus text-ui-fg-base mb-1">
-              Entrez les informations de votre carte :
+            <Text className="txt-medium-plus text-ui-fg-base mb-3">
+              Choisissez votre moyen de paiement :
             </Text>
-            <CardElement
-              options={useOptions as StripeCardElementOptions}
-              onChange={(e) => {
-                setCardBrand(
-                  e.brand && e.brand.charAt(0).toUpperCase() + e.brand.slice(1)
-                )
-                setError(e.error?.message || null)
-                setCardComplete(e.complete)
-              }}
-            />
+
+            <div className="rounded-md border border-ui-border-base bg-ui-bg-field p-4">
+              <PaymentElement
+                options={paymentElementOptions}
+                onChange={(e) => {
+                  setError(null)
+
+                  const type = e.value?.type
+
+                  if (type === "card") {
+                    setCardComplete(e.complete)
+                    setCardBrand("Carte bancaire")
+                    return
+                  }
+
+                  if (type === "twint") {
+                    setCardComplete(true)
+                    setCardBrand("TWINT")
+                    return
+                  }
+
+                  if (type === "paypal") {
+                    setCardComplete(true)
+                    setCardBrand("PayPal")
+                    return
+                  }
+
+                  if (type) {
+                    setCardComplete(e.complete)
+                    setCardBrand(type)
+                    return
+                  }
+
+                  setCardComplete(false)
+                  setCardBrand("")
+                }}
+              />
+            </div>
           </div>
         ) : (
           <SkeletonCardDetails />

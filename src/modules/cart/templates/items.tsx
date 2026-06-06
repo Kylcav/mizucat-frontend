@@ -22,26 +22,34 @@ const ItemsTemplate = ({ cart }: ItemsTemplateProps) => {
 
       <Table>
         <Table.Header className="border-t-0">
-          <Table.Row className="text-ui-fg-subtle txt-medium-plus">
-            <Table.HeaderCell className="!pl-0">
-              Produit
-            </Table.HeaderCell>
+  {/* Mobile */}
+  <Table.Row className="small:hidden text-ui-fg-subtle txt-medium-plus">
+    <Table.HeaderCell className="!px-0 text-center">
+      Produit
+    </Table.HeaderCell>
+  </Table.Row>
 
-            <Table.HeaderCell></Table.HeaderCell>
+  {/* Desktop inchangé */}
+  <Table.Row className="hidden small:table-row text-ui-fg-subtle txt-medium-plus">
+    <Table.HeaderCell className="!pl-0">
+      Produit
+    </Table.HeaderCell>
 
-            <Table.HeaderCell>
-              Quantité
-            </Table.HeaderCell>
+    <Table.HeaderCell></Table.HeaderCell>
 
-            <Table.HeaderCell className="hidden small:table-cell">
-              Prix
-            </Table.HeaderCell>
+    <Table.HeaderCell>
+      Quantité
+    </Table.HeaderCell>
 
-            <Table.HeaderCell className="!pr-0 text-right">
-              Total
-            </Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
+    <Table.HeaderCell className="hidden small:table-cell">
+      Prix
+    </Table.HeaderCell>
+
+    <Table.HeaderCell className="!pr-0 text-right">
+      Total
+    </Table.HeaderCell>
+  </Table.Row>
+</Table.Header>
 
         <Table.Body>
           {items

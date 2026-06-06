@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /account
+Disallow: /cart
+
+# Host
+Host: https://mizucat.ch
+
+# Sitemaps
+Sitemap: https://mizucat.ch/sitemap.xml

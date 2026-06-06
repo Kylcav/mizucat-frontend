@@ -406,19 +406,19 @@ const shippingMethods = _shippingMethods || []
         <div>
           <div className="text-small-regular">
             {cart && (cart.shipping_methods?.length ?? 0) > 0 && (
-              <div className="flex flex-col w-1/3">
-                <Text className="txt-medium-plus text-ui-fg-base mb-1">
-                  Méthode
-                </Text>
+              <div className="flex flex-col w-full md:w-1/3 min-w-0">
+  <Text className="txt-medium-plus text-ui-fg-base mb-1">
+    Méthode
+  </Text>
 
-                <Text className="txt-medium text-ui-fg-subtle">
-                  {cart.shipping_methods!.at(-1)!.name}{" "}
-                  {convertToLocale({
-                    amount: cart.shipping_methods!.at(-1)!.amount!,
-                    currency_code: cart?.currency_code,
-                  })}
-                </Text>
-              </div>
+  <Text className="txt-medium text-ui-fg-subtle break-words">
+    {cart.shipping_methods!.at(-1)!.name}{" "}
+    {convertToLocale({
+      amount: cart.shipping_methods!.at(-1)!.amount!,
+      currency_code: cart?.currency_code,
+    })}
+  </Text>
+</div>
             )}
           </div>
         </div>
