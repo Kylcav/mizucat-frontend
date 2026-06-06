@@ -3,6 +3,8 @@ import { Metadata } from "next"
 import Script from "next/script"
 import "styles/globals.css"
 
+const META_PIXEL_ID = "1000113249482372"
+
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
   icons: {
@@ -15,10 +17,8 @@ export const metadata: Metadata = {
 export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" data-mode="light">
-      <body>
-        <main className="relative">{props.children}</main>
-
-        <Script id="meta-pixel" strategy="afterInteractive">
+      <head>
+        <Script id="meta-pixel" strategy="beforeInteractive">
           {`
             !function(f,b,e,v,n,t,s)
             {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -30,10 +30,24 @@ export default function RootLayout(props: { children: React.ReactNode }) {
             (window, document,'script',
             'https://connect.facebook.net/en_US/fbevents.js');
 
-            fbq('init', '1000113249482372');
+            fbq('init', '${META_PIXEL_ID}');
             fbq('track', 'PageView');
           `}
         </Script>
+      </head>
+
+      <body>
+        <noscript>
+          <img
+            height="1"
+            width="1"
+            style={{ display: "none" }}
+            src={`https://www.facebook.com/tr?id=${META_PIXEL_ID}&ev=PageView&noscript=1`}
+            alt=""
+          />
+        </noscript>
+
+        <main className="relative">{props.children}</main>
       </body>
     </html>
   )
