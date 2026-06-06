@@ -2,6 +2,7 @@
 
 import { addToCart } from "@lib/data/cart"
 import { useIntersection } from "@lib/hooks/use-in-view"
+import { fbq } from "@lib/meta-pixel"
 import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
 import Divider from "@modules/common/components/divider"
@@ -124,6 +125,26 @@ export default function ProductActions({
         variantId: selectedVariant.id,
         quantity: 1,
         countryCode,
+      })
+
+      const calculatedPrice = selectedVariant.calculated_price
+
+      fbq("AddToCart", {
+        content_ids: [selectedVariant.id],
+        content_name: product.title,
+        content_type: "product",
+        contents: [
+          {
+            id: selectedVariant.id,
+            quantity: 1,
+            item_price: calculatedPrice?.calculated_amount,
+          },
+        ],
+        value: calculatedPrice?.calculated_amount,
+        currency:
+          calculatedPrice?.currency_code?.toUpperCase() ||
+          product.variants?.[0]?.calculated_price?.currency_code?.toUpperCase() ||
+          "CHF",
       })
 
       router.push(`/${countryCode}/cart`)
