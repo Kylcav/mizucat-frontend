@@ -1,8 +1,8 @@
 import { getBaseURL } from "@lib/util/env"
 import { Metadata } from "next"
-import "styles/globals.css"
+import "../styles/globals.css"
 
-const META_PIXEL_ID = "1000113249482372"
+const META_PIXEL_ID = "27024824927171752"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
