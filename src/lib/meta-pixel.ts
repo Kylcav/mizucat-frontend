@@ -1,4 +1,4 @@
-export const META_PIXEL_ID = "1000113249482372"
+export const META_PIXEL_ID = "27024824927171752"
 
 type MetaPixelEvent =
   | "PageView"
