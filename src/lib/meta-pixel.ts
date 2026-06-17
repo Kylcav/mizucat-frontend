@@ -9,10 +9,11 @@ type MetaPixelEvent =
 
 export const fbq = (
   event: MetaPixelEvent,
-  data?: Record<string, any>
+  data?: Record<string, any>,
+  options?: Record<string, any>
 ) => {
   if (typeof window === "undefined") return
   if (!(window as any).fbq) return
 
-  ;(window as any).fbq("track", event, data)
+  ;(window as any).fbq("track", event, data, options)
 }
