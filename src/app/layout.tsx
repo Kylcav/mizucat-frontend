@@ -7,6 +7,7 @@ import "../styles/globals.css"
 
 const META_PIXEL_ID = "27024824927171752"
 const TIKTOK_PIXEL_ID = "D8PFD5RC77U1TIMDIU10"
+const CONTENTSQUARE_TAG_URL = "https://t.contentsquare.net/uxa/0b8c7765f297d.js"
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
@@ -21,6 +22,12 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="fr" data-mode="light">
       <body>
+        <Script
+          id="contentsquare-tag"
+          src={CONTENTSQUARE_TAG_URL}
+          strategy="afterInteractive"
+        />
+
         <Script id="meta-pixel" strategy="afterInteractive">
           {`
             !function(f,b,e,v,n,t,s)
@@ -42,22 +49,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
               w.TiktokAnalyticsObject=t;
               var ttq=w[t]=w[t]||[];
               ttq.methods=[
-                "page",
-                "track",
-                "identify",
-                "instances",
-                "debug",
-                "on",
-                "off",
-                "once",
-                "ready",
-                "alias",
-                "group",
-                "enableCookie",
-                "disableCookie",
-                "holdConsent",
-                "revokeConsent",
-                "grantConsent"
+                "page","track","identify","instances","debug","on","off",
+                "once","ready","alias","group","enableCookie","disableCookie",
+                "holdConsent","revokeConsent","grantConsent"
               ];
               ttq.setAndDefer=function(t,e){
                 t[e]=function(){
